@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MikDonate</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f0f2f5; margin:0; padding:0; }
+    header { background:#4a90e2; color:white; padding:15px; text-align:center; font-size:1.5em; font-weight:bold; }
+    .container { max-width:800px; margin:20px auto; padding:0 15px; }
+    .post { background:white; padding:15px; margin-bottom:15px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+    .post h3 { margin-top:0; }
+    .donate-buttons { margin-top:10px; }
+    .donate-buttons button {
+      padding:8px 15px; margin-right:10px; border:none; border-radius:5px; cursor:pointer; color:white; font-weight:bold;
+    }
+    .gopay { background-color:#00b14f; }
+    .dana { background-color:#0055ff; }
+    .add-post { margin-bottom:20px; background:#fff; padding:15px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+    .add-post input, .add-post textarea { width:100%; padding:8px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc; }
+    .add-post button { background:#4a90e2; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
+    footer { text-align:center; padding:15px; margin-top:30px; color:#777; }
+  </style>
+</head>
+<body>
+  <header>MikDonate</header>
+
+  <div class="container">
+    <div class="add-post">
+      <h3>Buat Postingan Baru</h3>
+      <input type="text" id="username" placeholder="Nama Pengguna">
+      <textarea id="content" rows="3" placeholder="Isi postingan"></textarea>
+      <button onclick="addPost()">Tambah Postingan</button>
+    </div>
+
+    <div id="posts">
+      <div class="post">
+        <h3>Pengguna: Admin</h3>
+        <p>Selamat datang di MikDonate! Klik tombol donate untuk mendukung.</p>
+        <div class="donate-buttons">
+          <button class="gopay" onclick="donate('GoPay')">Donate via GoPay</button>
+          <button class="dana" onclick="donate('Dana')">Donate via Dana</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 MikDonate - Donasi langsung ke nomor/QR</footer>
+
+  <script>
+    const gopayNumber = "082148930950"; // Ganti dengan nomor/QR GoPay kamu
+    const danaNumber = "082148930950";  // Ganti dengan nomor/QR Dana kamu
+
+    function donate(wallet) {
+      let message = '';
+      if(wallet === 'GoPay') {
+        message = `Scan QR / transfer ke GoPay: ${gopayNumber}`;
+      } else if(wallet === 'Dana') {
+        message = `Scan QR / transfer ke Dana: ${danaNumber}`;
+      }
+      alert(message);
+    }
+
+    function addPost() {
+      const username = document.getElementById('username').value.trim();
+      const content = document.getElementById('content').value.trim();
+      if(username === '' || content === '') {
+        alert('Isi nama dan postingan!');
+        return;
+      }
+
+      const postsDiv = document.getElementById('posts');
+      const postDiv = document.createElement('div');
+      postDiv.className = 'post';
+      postDiv.innerHTML = `
+        <h3>Pengguna: ${username}</h3>
+        <p>${content}</p>
+        <div class="donate-buttons">
+          <button class="gopay" onclick="donate('GoPay')">Donate via GoPay</button>
+          <button class="dana" onclick="donate('Dana')">Donate via Dana</button>
+        </div>
+      `;
+      postsDiv.prepend(postDiv);
+
+      document.getElementById('username').value = '';
+      document.getElementById('content').value = '';
+    }
+  </script>
+</body>
+</html>
